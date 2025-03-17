@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
+import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -111,6 +112,7 @@ export default function HistoricoPagamentos() {
         })
       } catch (error) {
         // Em caso de erro, usamos dados mockados
+        console.error("Erro ao buscar dados do clima:", error);
         setWeatherData({
           temperature: 28,
           description: "Ensolarado",
@@ -567,7 +569,7 @@ function PaymentModal({ open, onOpenChange, parcela }: PaymentModalProps) {
           <TabsContent value="pix" className="pt-3">
             <div className="flex flex-col items-center space-y-4">
               <div className="rounded-lg bg-slate-100 p-4">
-                <img
+                <Image
                   src="https://chart.googleapis.com/chart?cht=qr&chl=00020126580014br.gov.bcb.pix0136a37c6e92-3898-4fb0-a3a9-d39c&chs=200x200&choe=UTF-8&chld=L|2"
                   alt="QR Code PIX"
                   className="h-48 w-48"
@@ -789,7 +791,7 @@ function CreditCardForm({ parcela, onClose }: CreditCardFormProps) {
             timestamp: new Date().toISOString(),
           }),
         })
-          .then((response) => console.log("Pagamento registrado com sucesso"))
+          .then(() => console.log("Pagamento registrado com sucesso"))
           .catch((error) => console.error("Erro ao registrar pagamento:", error))
       } else if (firstDigit === "0") {
         setPaymentStatus("error")
@@ -908,12 +910,7 @@ function CreditCardForm({ parcela, onClose }: CreditCardFormProps) {
     return (
       <div className="flex flex-col items-center justify-center py-8">
         <div className="w-24 h-24 mb-4">
-          <lottie-player
-            src="https://assets2.lottiefiles.com/packages/lf20_s2lryxtd.json"
-            background="transparent"
-            speed="1"
-            autoplay
-          ></lottie-player>
+         
         </div>
         <h3 className="text-xl font-bold text-green-600 mb-2">Pagamento Aprovado!</h3>
         <p className="text-center text-muted-foreground mb-6">Seu pagamento foi processado com sucesso.</p>
@@ -926,12 +923,7 @@ function CreditCardForm({ parcela, onClose }: CreditCardFormProps) {
     return (
       <div className="flex flex-col items-center justify-center py-8">
         <div className="w-24 h-24 mb-4">
-          <lottie-player
-            src="https://assets5.lottiefiles.com/packages/lf20_qpwbiyxf.json"
-            background="transparent"
-            speed="1"
-            autoplay
-          ></lottie-player>
+        
         </div>
         <h3 className="text-xl font-bold text-red-600 mb-2">Pagamento Recusado</h3>
         <p className="text-center text-muted-foreground mb-6">{errorMessage}</p>
